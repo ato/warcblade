@@ -14,12 +14,6 @@ import (
 )
 
 func cmdGet(args []string) {
-	//f, err := os.Create("hello.warc")
-	//if err != nil {
-	//	panic(err)
-	//}
-	//defer f.Close()
-
 	err := fetch(args[0], os.Stdout)
 	if err != nil {
 		panic(err)
@@ -95,7 +89,10 @@ func fetch(url string, out *os.File) error {
 		return err
 	}
 
-	out.Write([]byte("\r\n\r\n"))
+	_, err = out.Write([]byte("\r\n\r\n"))
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
